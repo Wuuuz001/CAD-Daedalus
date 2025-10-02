@@ -1,20 +1,20 @@
 # CAD-Daedalus
 A neuro-symbolic framework for reliable, standardized engineering design using LLMs.
-CAD-Daedalus: AI-Powered Engineering Parameter Extractor
+AD-Daedalus: AI-Powered Engineering Parameter Extractor
 CAD-Daedalus is a neuro-symbolic framework designed to bridge the gap between visual engineering drawings and structured, machine-readable data. This web application serves as the interactive frontend and intelligent backend for the framework, allowing users to extract key parameters from images, iteratively refine the results with AI assistance, and generate standardized, verifiable JSON for downstream CAD/CAM processes.
 
 This project reframes the role of Large Language Models (LLMs) from unreliable end-to-end generators to interactive proposal engines within a deterministic and verifiable system.
 
-!
-(建议在此处替换为您的应用截图)
+!(https://i.imgur.com/your-screenshot-url.png)
+(It is recommended to replace this with a screenshot of your application)
 
 🚀 How to Use: Generating Standardized JSON
 The entire process is designed as a straightforward, step-by-step workflow. Here is how you can generate your first standardized JSON file:
 
-Step 1: Initial Analysis (初次分析)
+Step 1: Initial Analysis
 You have two ways to start a new analysis:
 
-Option A: By Image (图像识别)
+Option A: By Image
 
 Click the "Select Main Image" button.
 
@@ -22,7 +22,7 @@ Upload an image of a technical drawing (e.g., a .png or .jpg file).
 
 The system will automatically identify the part type from the drawing.
 
-Option B: By Text Hint (文本提示)
+Option B: By Text Hint
 
 In the input field, type a keyword for the part you want to create, for example, cylinder or hexagonal_screw.
 
@@ -30,7 +30,7 @@ The system will use this hint to generate a basic data template for that specifi
 
 Once you have provided an image or a text hint, select the target output dimension (2D or 3D), and click the "Initial Analysis" button.
 
-Step 2: Review and Edit (审查与编辑)
+Step 2: Review and Edit
 After a few moments, the AI will complete its analysis:
 
 An "AI Analysis Summary" will appear, providing notes on the extraction process.
@@ -43,7 +43,7 @@ Manually correct any inaccuracies or fill in any missing values directly in the 
 
 As you make changes, the "JSON Structure & Data Validation" panel on the right side will provide real-time feedback, showing errors (❌), warnings (⚠️), or successes (✅) based on predefined engineering rules.
 
-Step 3: Iterate and Refine (迭代与优化)
+Step 3: Iterate and Refine
 If the initial analysis is incomplete or requires correction for a complex part, use the "Iteration & Refinement" section:
 
 Provide a corrective hint in the text area (e.g., "The height of the cylinder should be 120, not 100").
@@ -54,7 +54,7 @@ Click the "Submit & Re-analyze" button.
 
 The AI will re-evaluate the data using your new input, preserving your previous manual edits while attempting to fill in only the remaining empty (null) fields.
 
-Step 4: Finalize and Export (定稿与导出)
+Step 4: Finalize and Export
 Once the form is complete and the Validation panel on the right shows no critical errors:
 
 Click the "View Final JSON" button.
@@ -140,7 +140,7 @@ Backend (Node.js / Express)
 │
 └── .gitignore                      # Specifies files for Git to ignore (e.g., node_modules).
 🛠️ Setup and Installation
-To run this project locally, you will need to set up both the backend and the frontend.
+To run this project locally, you will need to set up both the backend and the frontend. This requires running two separate terminal sessions.
 
 Backend Setup
 Navigate to the backend directory:
@@ -148,38 +148,40 @@ Navigate to the backend directory:
 Bash
 
 cd my-ai-backend
-Create an environment file:
-Copy the .env.example file to a new file named .env and fill in your API credentials.
+Configure Environment Variables:
+Create a .env file by copying the .env.example file. Then, fill in your API credentials.
 
-# .env
+# .env file content
 PORT=3001
 OPENAI_API_KEY="sk-your-openai-api-key"
 OPENAI_API_BASE_URL="https://api.openai.com/v1" # Or your proxy URL
 AI_MODEL_NAME="gpt-4-vision-preview" # Or another compatible model
-Install dependencies:
+Install Dependencies:
 
 Bash
 
 npm install
-Start the server:
+Start the Server:
 
 Bash
 
 node server.js
-The backend server should now be running on http://localhost:3001.
+The backend server should now be running on http://localhost:3001. Keep this terminal window open.
 
 Frontend Setup
-Open a new terminal and navigate to the frontend directory:
+Open a new terminal window.
+
+Navigate to the frontend directory:
 
 Bash
 
 cd my-ai-front
-Install dependencies:
+Install Dependencies:
 
 Bash
 
 npm install
-Start the development server:
+Start the Development Server:
 
 Bash
 
