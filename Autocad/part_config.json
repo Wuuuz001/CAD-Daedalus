@@ -1,0 +1,26 @@
+{
+  "shape": "cuboid",
+  "parameters": { "length": 160.0, "width": 54.0, "height": 40.0 },
+  "drawing_options": {
+    "insertion_point": [10.0, 10.0], "spacing": 50.0,
+    "layers": {
+      "outline": { "name": "Outline", "color": 7 },
+      "centerline": { "name": "Centerline", "color": 1, "linetype": "CENTER" },
+      "dimensions": { "name": "Dimensions", "color": 5 },
+      "annotations": { "name": "Annotations", "color": 6 }
+    },
+    "dimension_options": { "text_height": 3.5, "arrow_size": 2.5 }
+  },
+  "datums": [
+    { "label": "A", "attach_to": "front_view_bottom_mid" },
+    { "label": "B", "attach_to": "side_view_left_mid" }
+  ],
+  "geometric_tolerances": [
+    { "type": "perpendicularity", "tolerance": "0.05", "datum_references": ["A"], "attach_to": "front_view_left_side" },
+    { "type": "parallelism", "tolerance": "0.1", "datum_references": ["B"], "attach_to": "side_view_right_side" }
+  ],
+  "surface_finish": {
+    "top_surface": [ "Ra1.6", 0, 8.0 ],
+    "right_side_surface": [ "Ra3.2", 90, 8.0 ]
+  }
+}

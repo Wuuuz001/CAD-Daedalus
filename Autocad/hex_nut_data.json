@@ -1,0 +1,66 @@
+{
+  "shape": "hexagonal_nut",
+  "parameters": {
+    "side_length": 50.0,
+    "side_length_tolerance": " ±0.5",
+    "height": 80.0,
+    "height_tolerance": " ±0.2",
+    "hole": {
+      "diameter": 30.0,
+      "diameter_tolerance": " H7"
+    }
+  },
+  "drawing_options": {
+    "insertion_point": [10.0, 10.0],
+    "spacing": 70.0,
+    "layers": {
+      "outline": { "name": "Outline", "color": 7 },
+      "centerline": { "name": "Centerline", "color": 1, "linetype": "CENTER" },
+      "hidden": { "name": "Hidden", "color": 4, "linetype": "HIDDEN" },
+      "dimensions": { "name": "Dimensions", "color": 2 },
+      "outline_hidden": { "name": "Outline_Hidden", "color": 7, "linetype": "HIDDEN2" },
+      "annotations": { "name": "Annotations", "color": 6, "linetype": "Continuous" }
+    },
+    "dimension_options": { "text_height": 3.5, "arrow_size": 2.5 },
+    "hatch_options": { "pattern": "ANSI31", "scale": 1.0 }
+  },
+  "datums": [
+    {
+      "label": "A",
+      "attach_face": "bottom"
+    },
+    {
+      "label": "B",
+      "attach_face": "side_face_right_view"
+    },
+    {
+      "label": "C",
+      "attach_face": "inner_hole_top_view"
+    }
+  ],
+  "geometric_tolerances": [
+    {
+      "type": "flatness",
+      "tolerance": "0.08",
+      "datum_references": ["B"],
+      "attach_to": "side_face_of_right_view"
+    },
+    {
+      "type": "perpendicularity",
+      "tolerance": "0.05",
+      "datum_references": ["A"],
+      "attach_to": "side_face_of_front_view"
+    },
+    {
+      "type": "position",
+      "tolerance": "%%c0.1",
+      "datum_references": ["c"],
+      "attach_to": "inner_hole_top_view"
+    }
+  ],
+  "surface_finish": {
+    "top_face": ["Ra 3.2", 90, 5.0],
+    "side_face_right_view": ["Ra 6.3", 0, 5.0],
+    "inner_hole_top_view": ["Ra 1.6", 45, 5.0]
+  }
+}

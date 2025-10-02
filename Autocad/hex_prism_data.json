@@ -1,0 +1,51 @@
+{
+  "shape": "hexagonal_prism",
+  "view_type": "three_view_with_dims",
+  "parameters": {
+    "side_length": 50.0,
+    "height": 80.0,
+    "height_tolerance": " ±0.2",
+    "width_tolerance": " ±0.1"
+  },
+  "drawing_options": {
+    "insertion_point": [10.0, 10.0],
+    "spacing": 70.0,
+    "layers": {
+      "outline": { "name": "Outline", "color": 7 },
+      "centerline": { "name": "Centerline", "color": 1, "linetype": "CENTER" },
+      "dimensions": { "name": "Dimensions", "color": 5 },
+      "annotations": { "name": "Annotations", "color": 6 }
+    },
+    "dimension_options": {
+      "text_height": 3.5,
+      "arrow_size": 2.5
+    }
+  },
+  "datums": [
+    {
+      "label": "A",
+      "attach_to": "front_view_centerline_bottom"
+    },
+    {
+      "label": "B",
+      "attach_to": "right_view_right_side_midpoint"
+    }
+  ],
+  "geometric_tolerances": [
+    {
+      "type": "perpendicularity",
+      "tolerance": "0.05",
+      "datum_references": ["A"],
+      "attach_to": "front_view_left_side"
+    },
+    {
+      "type": "perpendicularity",
+      "tolerance": "0.06",
+      "datum_references": ["B"],
+      "attach_to": "right_view_top_surface"
+    }
+  ],
+  "surface_finish": {
+    "top_surface": ["1.6", -90, 8.0]
+  }
+}

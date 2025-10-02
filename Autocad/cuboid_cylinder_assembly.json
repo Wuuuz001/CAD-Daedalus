@@ -1,0 +1,71 @@
+{
+  "shape": "cuboid_cylinder_assembly",
+  "drawing_options": {
+    "insertion_point": [10, 10],
+    "spacing": 50,
+    "draw_section_view": true,
+    "layers": {
+      "outline": { "name": "Outline", "color": 7 },
+      "hidden": { "name": "Hidden", "color": 7, "linetype": "HIDDEN" },
+      "centerline": { "name": "Centerline", "color": 1, "linetype": "CENTER" },
+      "dimensions": { "name": "Dimensions", "color": 2 },
+      "annotations": { "name": "Annotations", "color": 6 },
+      "hatch": { "name": "Hatch", "color": 7 }
+    },
+    "dimension_options": {
+      "text_height": 3.5,
+      "arrow_size": 2.5
+    },
+    "hatch_options": {
+      "pattern": "ANSI31",
+      "scale": 1.50
+    }
+  },
+  "components": {
+    "cuboid": {
+      "name": "Base Block",
+      "parameters": {
+        "length": 200,
+        "width": 150,
+        "height": 60,
+        "height_tolerance": "±0.2"
+      }
+    },
+    "cylinder": {
+      "name": "Embedded Post",
+      "parameters": {
+        "radius": 40,
+        "height": 120,
+        "diameter_tolerance": "±0.1"
+      }
+    }
+  },
+  "parameters": {
+    "Author": "wuuuz",
+    "DrawingNo": "001"
+  },
+  "datums": [
+    { "label": "A", "attach_to": "front_view_bottom_mid" },
+    { "label": "B", "attach_to": "side_view_left_mid" },
+    { "label": "C", "attach_to": "front_view_left_mid" }
+  ],
+  "geometric_tolerances": [
+    {
+      "type": "perpendicularity",
+      "tolerance": "0.05",
+      "datum_references": ["A"],
+      "attach_to": "hole_outline_top_view"
+    },
+    {
+      "type": "parallelism",
+      "tolerance": "0.1",
+      "datum_references": ["A"],
+      "attach_to": "front_view_top_surface"
+    }
+  ],
+  "surface_finish": {
+    "top_surface": ["Ra6.3", 0, 5],
+    "hole_bottom": ["Ra3.2", 0, 5],
+    "hole_wall": ["Ra1.6", 90, 5]
+  }
+}

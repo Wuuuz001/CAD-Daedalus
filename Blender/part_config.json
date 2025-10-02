@@ -1,0 +1,10 @@
+{
+    "parameters": {
+        "length": 8,
+        "width": 5,
+        "height": 3
+    },
+    "drawing_options": {
+        "insertion_point": [0, 0]
+    }
+}

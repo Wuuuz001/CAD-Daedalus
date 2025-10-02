@@ -1,0 +1,71 @@
+{
+  "shape": "screw_nut_assembly",
+  "drawing_options": {
+    "insertion_point": [10, 10],
+    "spacing": 50,
+    "draw_section_view":true,
+    "hatch_options": {
+      "pattern": "ANSI31",
+      "scale": 1.0,
+      "color": 7
+    },
+    "layers": {
+      "outline": {"name": "Outline", "color": 7},
+      "dimensions": {"name": "Dimensions", "color": 2},
+      "centerline": {"name": "Centerline", "color": 1, "linetype": "CENTER"},
+      "hidden": {"name": "Hidden", "color": 7, "linetype": "HIDDEN"},
+      "annotations": {"name": "Annotations", "color": 6}
+    },
+    "dimension_options": {
+      "text_height": 3.5,
+      "arrow_size": 2.5
+    }
+  },
+  "components": {
+    "screw": {
+      "name": "Hex Screw M10x50",
+      "quantity": 1,
+      "parameters": {
+        "head_width": 40,
+        "head_height": 10,
+        "shaft_diameter": 10,
+        "shaft_length": 50
+      }
+    },
+    "nut": {
+      "name": "Hex Nut M10",
+      "quantity": 1,
+      "parameters": {
+        "width": 50,
+        "height": 8,
+        "hole_diameter": 10
+      }
+    }
+  },
+  "parameters": {
+    "total_height_tolerance": "±0.5",
+    "head_width_tolerance": "±0.2"
+  },
+  "datums": [
+    { "label": "A", "attach_to": "underside_of_screw_head" },
+    { "label": "B", "attach_to": "screw_axis_right_view" }
+  ],
+  "geometric_tolerances": [
+    {
+      "type": "perpendicularity",
+      "tolerance": "0.1",
+      "datum_references": ["B"],
+      "attach_to": "underside_of_screw_head_gdt"
+    },
+    {
+      "type": "parallelism",
+      "tolerance": "0.2",
+      "datum_references": ["A"],
+      "attach_to": "nut_top_face"
+    }
+  ],
+  "surface_finish": {
+    "underside_of_screw_head": ["Ra3.2", 180, 5],
+    "top_of_screw_head": ["Ra6.3", 0, 5]
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "components": {
+        "cylinder": {},
+        "screw_head": {},
+        "nut": {}
+    },
+    "drawing_options": {
+        "insertion_point": [
+            0,
+            0
+        ]
+    }
+}

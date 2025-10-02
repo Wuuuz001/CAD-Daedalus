@@ -1,0 +1,9 @@
+{
+    "components": {
+        "cuboid": {},
+        "cylinder": {}
+    },
+    "drawing_options": {
+        "insertion_point": [0, 0]
+    }
+}

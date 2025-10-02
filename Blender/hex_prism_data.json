@@ -1,0 +1,9 @@
+{
+    "parameters": {
+        "side_length": 3,
+        "height": 12
+    },
+    "drawing_options": {
+        "insertion_point": [0, 0]
+    }
+}

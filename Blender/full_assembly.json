@@ -1,0 +1,13 @@
+{
+    "components": {
+        "cuboid": {},
+        "screw": {},
+        "nut": {}
+    },
+    "drawing_options": {
+        "insertion_point": [
+            0,
+            0
+        ]
+    }
+}

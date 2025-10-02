@@ -1,0 +1,50 @@
+{
+  "shape": "cylinder",
+  "parameters": {
+    "radius": 40.0,
+    "height": 100.0,
+    "height_tolerance": " ±0.2",
+    "diameter_tolerance": " h8"
+  },
+  "drawing_options": {
+    "insertion_point": [10.0, 10.0],
+    "spacing": 60.0,
+    "layers": {
+      "outline": { "name": "Outline", "color": 7, "linetype": "Continuous" },
+      "centerline": { "name": "Centerline", "color": 1, "linetype": "CENTER" },
+      "dimensions": { "name": "Dimensions", "color": 5, "linetype": "Continuous" },
+      "annotations": { "name": "Annotations", "color": 6, "linetype": "Continuous" }
+    },
+    "dimension_options": { "text_height": 3.5, "arrow_size": 2.5 }
+  },
+  "surface_finish": {
+    "side_surface": ["Ra 3.2", 90, 5],
+    "top_surface": ["Ra 1.6", 0, 5]
+  },
+  "geometric_tolerances": [
+    {
+      "type": "perpendicularity",
+      "leader_attach_point": "left_side",
+      "tolerance": "0.05",
+      "datum_references": ["A"],
+      "frame_location": "left_of_front_view"
+    },
+    {
+      "type": "parallelism",
+      "leader_attach_point": "right_side",
+      "tolerance": "0.02",
+      "datum_references": ["B"],
+      "frame_location": "right_of_right_view"
+    }
+  ],
+  "datums": [
+    {
+      "label": "A",
+      "attach_face": "bottom"
+    },
+    {
+      "label": "B",
+      "attach_face": "centerline"
+    }
+  ]
+}
