@@ -1,15 +1,10 @@
-# main_generator.py (最终完整版 - 已添加所有模型和新装配体)
+# main_generator.py 
 import json
 import os
 import textwrap
 
-
-# ==============================================================================
-# Blender脚本生成函数 (新增一个装配体函数)
-# ==============================================================================
-
 def get_blender_script_header():
-    """【最终修正版】移除所有视图操作，只保留核心功能。"""
+    
     return textwrap.dedent("""
 import bpy
 
