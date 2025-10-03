@@ -3,7 +3,6 @@ import { ref, reactive, computed } from 'vue';
 import JsonEditor from './components/JsonEditor.vue';
 import JsonValidator from './components/JsonValidator.vue';
 
-// --- State Management ---
 const initialImageBase64 = ref('');
 const iterationImageBase64 = ref('');
 const userTextPrompt = ref('');
@@ -14,22 +13,19 @@ const activeTab = ref('analyzer');
 const initialUserHint = ref('');
 const aiNotes = ref('');
 const outputDimension = ref('2d');
-// --- 【【【 新增 State 用于新功能 】】】 ---
 const newShapeDescription = ref('');
 const newShapeImageBase64 = ref('');
 const isGeneratingFunction = ref(false);
 const generatedPythonCode = ref('');
 const pythonGenerationError = ref('');
 
-
-// --- 【【【 新增方法用于新功能 】】】 ---
 const handleNewShapeImageChange = async (e) => {
   const file = e.target.files[0];
   if (!file) {
     newShapeImageBase64.value = '';
     return;
   }
-  newShapeImageBase64.value = await fileToBase64(file); // 复用已有的 fileToBase64 函数
+  newShapeImageBase64.value = await fileToBase64(file);
 };
 
 const handleGenerateFunction = async () => {
@@ -40,7 +36,7 @@ const handleGenerateFunction = async () => {
 
   isGeneratingFunction.value = true;
   pythonGenerationError.value = '';
-  generatedPythonCode.value = '// AI is thinking, please wait...';
+  generatedPythonCode.value = '# AI is thinking, please wait...';
 
   try {
     const response = await fetch('/api/generate_function', {
@@ -78,7 +74,6 @@ const copyPythonCode = async () => {
   }
 };
 
-// --- Utility Functions & Computed Properties ---
 function hasNullOrEmpty(data) {
   if (data === null || data === '') return true;
   if (Array.isArray(data)) {
@@ -105,7 +100,6 @@ const isFormIncomplete = computed(() => {
   return hasNullOrEmpty(analysisResult.value);
 });
 
-// --- Core Logic Functions ---
 const resetForNewAnalysis = () => {
   console.log("🔄 Resetting analysis state for a new analysis!");
   analysisResult.value = null;
@@ -183,7 +177,7 @@ const handleAnalysis = async (isIteration = false) => {
     }
     const responsePayload = await response.json();
     
-    aiNotes.value = responsePayload.notes; 
+    aiNotes.value = responsePayload.notes;
     analysisResult.value = reactive(responsePayload.data);
     if (!isIteration) {
       initialUserHint.value = '';
@@ -239,20 +233,19 @@ const switchToJsonTab = () => {
     
     <div class="main-layout">
       
-      <!-- ===== Main Panel (Left) ===== -->
       <div class="main-panel">
         <div class="tabs">
           <button :class="{ active: activeTab === 'analyzer' }" @click="activeTab = 'analyzer'">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 00-1-1v-.5a1.5 1.5 0 01-3 0v.5a1 1 0 00-1 1H6a1 1 0 01-1-1v-3a1 1 0 011-1h.5a1.5 1.5 0 000-3H6a1 1 0 01-1-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 00-1-1v-.5a1.5 1.5 0 01-3 0v.5a1 1 0 00-1 1H6a1 1 0 01-1-1v-3a1 1 0 011-1h.5a1.5 1.5 0 000-3H6a1 1 0 01-1-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/></svg>
             AI Extraction
           </button>
           <button :class="{ active: activeTab === 'json_code' }" @click="switchToJsonTab">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.39 6.39a.75.75 0 011.06 0l2.11 2.11a.75.75 0 010 1.06L7.45 11.61a.75.75 0 01-1.06-1.06l1.59-1.59-1.59-1.59a.75.75 0 010-1.06zM13.61 6.39a.75.75 0 010 1.06l-1.59 1.59 1.59 1.59a.75.75 0 01-1.06 1.06L10.44 9.56a.75.75 0 010-1.06l2.11-2.11a.75.75 0 011.06 0z" clip-rule="evenodd"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.39 6.39a.75.75 0 011.06 0l2.11 2.11a.75.75 0 010 1.06L7.45 11.61a.75.75 0 01-1.06-1.06l1.59-1.59-1.59-1.59a.75.75 0 010-1.06zM13.61 6.39a.75.75 0 010 1.06l-1.59 1.59 1.59 1.59a.75.75 0 01-1.06 1.06L10.44 9.56a.75.75 0 010-1.06l2.11-2.11a.75.75 0 011.06 0z" clip-rule="evenodd"/></svg>
             JSON Code
           </button>
           <button :class="{ active: activeTab === 'function_generator' }" @click="activeTab = 'function_generator'">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.362 3.653a1 1 0 00-1.04-.344L4.36 5.562a1 1 0 00-.86 1.036l.732 4.418-1.54 1.232a1 1 0 00-.28 1.344l4.25 5.5a1 1 0 001.455.155l3.8-2.85a1 1 0 00.223-1.16l-1.334-3.001 3.428-1.904a1 1 0 00.556-1.328l-2.438-4.25a1 1 0 00-1.18-.543z" /></svg>
-             Add New Shape
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.362 3.653a1 1 0 00-1.04-.344L4.36 5.562a1 1 0 00-.86 1.036l.732 4.418-1.54 1.232a1 1 0 00-.28 1.344l4.25 5.5a1 1 0 001.455.155l3.8-2.85a1 1 0 00.223-1.16l-1.334-3.001 3.428-1.904a1 1 0 00.556-1.328l-2.438-4.25a1 1 0 00-1.18-.543z" /></svg>
+              Add New Shape
           </button>
         </div>
         
@@ -361,53 +354,52 @@ const switchToJsonTab = () => {
           </div>
 
           <div v-if="activeTab === 'function_generator'" class="tab-content">
-      <div class="card">
-        <h2>Generate New Python Drawing Function</h2>
-        <p style="margin-bottom: 1.5rem;">Describe a new part with text or an image. The AI will write the Python function for you, which you can then add to your LISP generator script.</p>
-        
-        <div class="function-generator-form">
-          <textarea 
-            v-model="newShapeDescription" 
-            placeholder="Describe the new shape here. E.g., 'A T-slot nut with overall dimensions 20x20x10mm. The T-slot is 8mm wide and 5mm deep...'"
-            class="iteration-textarea"
-            rows="5"
-          ></textarea>
+            <div class="card">
+              <h2>Generate New Python Drawing Function</h2>
+              <p style="margin-bottom: 1.5rem;">Describe a new part with text or an image. The AI will write the Python function for you, which you can then add to your Python generator script.</p>
+              
+              <div class="function-generator-form">
+                <textarea 
+                  v-model="newShapeDescription" 
+                  placeholder="Describe the new shape here. E.g., 'A T-slot nut with overall dimensions 20x20x10mm. The T-slot is 8mm wide and 5mm deep...'"
+                  class="iteration-textarea"
+                  rows="5"
+                ></textarea>
 
-          <div class="iteration-upload" style="margin-top: 1rem;">
-            <label for="shape-image-upload" class="custom-file-upload">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z"/><path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z"/></svg>
-              Upload Sketch (Optional)
-            </label>
-            <input id="shape-image-upload" type="file" @change="handleNewShapeImageChange" accept="image/*" />
-            <span v-if="newShapeImageBase64" class="file-selected-badge">Image Selected</span>
+                <div class="iteration-upload" style="margin-top: 1rem;">
+                  <label for="shape-image-upload" class="custom-file-upload">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z"/><path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z"/></svg>
+                    Upload Sketch (Optional)
+                  </label>
+                  <input id="shape-image-upload" type="file" @change="handleNewShapeImageChange" accept="image/*" />
+                  <span v-if="newShapeImageBase64" class="file-selected-badge">Image Selected</span>
+                </div>
+
+                <button @click="handleGenerateFunction" :disabled="isGeneratingFunction" class="primary-btn" style="margin-top: 1.5rem;">
+                  <div v-if="isGeneratingFunction" class="spinner-small"></div>
+                  {{ isGeneratingFunction ? 'Generating Code...' : 'Generate Python Function' }}
+                </button>
+              </div>
+            </div>
+
+            <div v-if="generatedPythonCode || isGeneratingFunction" class="card" style="margin-top: 2rem;">
+              <h2>Generated Python Code:</h2>
+              <p>Copy this code and paste it into your Python script.</p>
+              <div class="json-code-container" style="max-height: 600px;">
+                <pre><code class="language-python">{{ generatedPythonCode }}</code></pre>
+              </div>
+              <button @click="copyPythonCode" class="primary-btn" style="margin-top: 1rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V16.5a1.5 1.5 0 01-1.5 1.5h-8A1.5 1.5 0 016 16.5v-13A1.5 1.5 0 017 3.5zM8.5 3.5a.5.5 0 00-.5.5v13a.5.5 0 00.5.5h8a.5.5 0 00.5-.5V6.622a.5.5 0 00-.146-.353l-3.122-3.122A.5.5 0 0012.379 3H8.5z"/><path d="M3 6.5A1.5 1.5 0 014.5 5h3a.75.75 0 000-1.5h-3A2.5 2.5 0 002 6v11A2.5 2.5 0 004.5 19.5h8A2.5 2.5 0 0015 17v-3a.75.75 0 00-1.5 0v3a1 1 0 01-1 1h-8a1 1 0 01-1-1V6z"/></svg>
+                Copy Python Code
+              </button>
+              <div v-if="pythonGenerationError" class="error-message" style="margin-top: 1rem; text-align: left;">
+                <p><strong>Error:</strong> {{ pythonGenerationError }}</p>
+              </div>
+            </div>
           </div>
-
-          <button @click="handleGenerateFunction" :disabled="isGeneratingFunction" class="primary-btn" style="margin-top: 1.5rem;">
-            <div v-if="isGeneratingFunction" class="spinner-small"></div>
-            {{ isGeneratingFunction ? 'Generating Code...' : 'Generate Python Function' }}
-          </button>
-        </div>
-      </div>
-
-      <div v-if="generatedPythonCode || isGeneratingFunction" class="card" style="margin-top: 2rem;">
-         <h2>Generated Python Code:</h2>
-         <p>Copy this code and paste it into your Python script.</p>
-         <div class="json-code-container" style="max-height: 600px;">
-            <pre><code class="language-python">{{ generatedPythonCode }}</code></pre>
-         </div>
-         <button @click="copyPythonCode" class="primary-btn" style="margin-top: 1rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V16.5a1.5 1.5 0 01-1.5 1.5h-8A1.5 1.5 0 016 16.5v-13A1.5 1.5 0 017 3.5zM8.5 3.5a.5.5 0 00-.5.5v13a.5.5 0 00.5.5h8a.5.5 0 00.5-.5V6.622a.5.5 0 00-.146-.353l-3.122-3.122A.5.5 0 0012.379 3H8.5z"/><path d="M3 6.5A1.5 1.5 0 014.5 5h3a.75.75 0 000-1.5h-3A2.5 2.5 0 002 6v11A2.5 2.5 0 004.5 19.5h8A2.5 2.5 0 0015 17v-3a.75.75 0 00-1.5 0v3a1 1 0 01-1 1h-8a1 1 0 01-1-1V6z"/></svg>
-            Copy Python Code
-         </button>
-         <div v-if="pythonGenerationError" class="error-message" style="margin-top: 1rem; text-align: left;">
-            <p><strong>Error:</strong> {{ pythonGenerationError }}</p>
-         </div>
-       </div>
-      </div>
         </main>
       </div>
 
-      <!-- ===== Validator Panel (Right) ===== -->
       <div v-if="analysisResult" class="side-panel">
         <JsonValidator :jsonData="analysisResult" />
       </div>
@@ -417,7 +409,6 @@ const switchToJsonTab = () => {
 </template>
 
 <style>
-/* ...保留所有已有样式... */
 :root {
   --primary-color: #4f46e5;
   --primary-color-hover: #4338ca;
@@ -448,12 +439,11 @@ body {
 }
 
 #app-container {
-  max-width: 1200px; /* 【【【调整】】】 稍微加宽最大宽度以容纳两栏 */
+  max-width: 1200px;
   margin: 2rem auto;
   padding: 1rem 2rem 2rem 2rem;
 }
 
-/* --- 卡片式布局 --- */
 .card {
   background-color: var(--card-bg-color);
   border-radius: var(--border-radius);
@@ -462,7 +452,6 @@ body {
   border: 1px solid var(--border-color);
 }
 
-/* --- 头部 --- */
 .app-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -485,20 +474,19 @@ body {
   margin-top: 0.5rem;
 }
 
-/* 【【【新增样式】】】 用于左右分栏布局 */
 .main-layout {
   display: flex;
-  gap: 2rem; /* 两栏之间的间距 */
-  align-items: flex-start; /* 顶部对齐 */
+  gap: 2rem;
+  align-items: flex-start;
 }
 .main-panel {
-  flex: 2; /* 主面板占据 2/3 空间 */
-  min-width: 0; /* 防止flex项目内容溢出时无法收缩 */
+  flex: 2;
+  min-width: 0;
 }
 .side-panel {
-  flex: 1; /* 侧边栏占据 1/3 空间 */
-  position: sticky; /* 让侧边栏在滚动时固定 */
-  top: 2rem; /* 固定在距离顶部 2rem 的位置 */
+  flex: 1;
+  position: sticky;
+  top: 2rem;
   animation: fadeInRight 0.5s ease-out;
 }
 @keyframes fadeInRight {
@@ -512,13 +500,11 @@ body {
   }
 }
 
-/* --- 标签页 --- */
 .tabs {
   display: flex;
   border-bottom: 2px solid var(--border-color);
-  margin-bottom: 2rem; /* tabs 和下面内容的间距 */
+  margin-bottom: 2rem;
 }
-/* 其他 tabs 样式保持不变 */
 .tabs button {
   display: flex;
   align-items: center;
@@ -548,8 +534,6 @@ body {
   color: var(--text-color);
 }
 
-
-/* --- 内容区 --- */
 .content-wrapper {
   animation: fadeIn 0.5s ease-in-out;
 }
@@ -558,7 +542,6 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- 按钮和输入框 --- */
 button {
   display: inline-flex;
   align-items: center;
@@ -599,7 +582,7 @@ button:disabled {
 }
 
 input[type="file"] {
-  display: none; /* 隐藏原生输入框 */
+  display: none;
 }
 .custom-file-upload {
   display: inline-flex;
@@ -621,7 +604,6 @@ input[type="file"] {
   height: 20px;
 }
 
-/* --- 面板布局 --- */
 .controls-panel {
   display: flex;
   gap: 1rem;
@@ -637,17 +619,15 @@ input[type="file"] {
   border-top: 1px solid var(--border-color);
 }
 .results-panel {
-  /* margin-top: 2rem; */ /* 不再需要这个，因为由tabs控制间距 */
 }
 .form-container {
   padding-top: 1rem;
 }
 
-/* --- 反馈信息 --- */
 .feedback-panel {
   text-align: center;
   padding: 2rem;
-  margin-top: 2rem; /* 与上方控件的间距 */
+  margin-top: 2rem;
   border-radius: var(--border-radius);
   border: 1px solid transparent;
 }
@@ -674,7 +654,6 @@ input[type="file"] {
   to { transform: rotate(360deg); }
 }
 
-/* --- 未完成表单提示样式 --- */
 .incomplete-form-notice {
   display: flex;
   align-items: center;
@@ -693,7 +672,6 @@ input[type="file"] {
   flex-shrink: 0;
 }
 
-/* --- 【新增】迭代区样式 --- */
 .iteration-zone {
   margin-top: 2rem;
   padding-top: 1.5rem;
@@ -718,7 +696,7 @@ input[type="file"] {
   font-family: var(--font-family);
   font-size: 0.9rem;
   resize: vertical;
-  box-sizing: border-box; /* 确保padding不会撑大宽度 */
+  box-sizing: border-box;
   margin-bottom: 1rem;
 }
 .iteration-upload {
@@ -745,8 +723,6 @@ input[type="file"] {
   font-weight: 500;
 }
 
-
-/* --- JSON代码库 --- */
 .json-code-wrapper {
   display: flex;
   flex-direction: column;
@@ -763,12 +739,11 @@ input[type="file"] {
   border: 1px solid #374151;
 }
 .json-code-wrapper button {
-  align-self: flex-start; /* 按钮靠左 */
+  align-self: flex-start;
 }
 
-/* --- 【新增样式】用于AI分析笔记 --- */
 .ai-notes-panel {
-  background-color: #f3f4f6; /* 浅灰色背景，与主背景区分 */
+  background-color: #f3f4f6;
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   padding: 1rem 1.25rem;
