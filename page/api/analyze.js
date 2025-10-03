@@ -1,48 +1,48 @@
 import { OpenAI } from 'openai';
-import { cylinderSchema } from '../../schemas/cylinder_schema'; // 导入我们刚刚创建的schema
+import { cylinderSchema } from '../../schemas/cylinder_schema'; // Import the schema we just created
 
-// 初始化OpenAI客户端，从环境变量中读取API密钥，确保安全
+// Initialize the OpenAI client, reading the API key from environment variables for security
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 export default async function handler(req, res) {
-  // 只接受POST请求
+  // Only accept POST requests
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: '方法不允许' });
+    return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
   try {
-    // 从请求体中获取Base64编码的图片和上一次的分析结果（用于迭代）
+    // Get the Base64 encoded image and the previous analysis result (for iteration) from the request body
     const { image, previousAnalysis } = req.body;
 
-    // --- 核心Prompt（给AI的指令） ---
-    // 这是项目最关键的部分。我们给AI设定角色、任务，并提供精确的格式要求。
+    // --- Core Prompt (Instructions for the AI) ---
+    // This is the most critical part of the project. We define the AI's role, task, and provide precise formatting requirements.
     let userPrompt = `
-      你是一个专业的AI助手，擅长解读机械工程图纸。
-      你的任务是分析提供的圆柱体零件的图像，并提取所有指定的参数。
-      你的回答必须是一个严格遵守下面提供的JSON Schema的、单一且有效的JSON对象。
-      对于任何你无法从图像中高置信度确定的值，你必须使用 null。不要猜测或编造数据。
-      请特别注意图纸上的形位公差(GD&T)、表面粗糙度符号和基准。
+      You are a professional AI assistant specializing in interpreting mechanical engineering drawings.
+      Your task is to analyze the provided image of a cylinder part and extract all specified parameters.
+      Your response must be a single, valid JSON object that strictly adheres to the JSON Schema provided below.
+      For any value you cannot determine with high confidence from the image, you must use null. Do not guess or fabricate data.
+      Pay special attention to Geometric Dimensioning and Tolerancing (GD&T) symbols, surface roughness symbols, and datums on the drawing.
 
-      必须遵守的JSON Schema如下:
+      The JSON Schema you must adhere to is as follows:
       ${JSON.stringify(cylinderSchema, null, 2)}
     `;
 
-    // 如果有上一次的分析结果（用户迭代），则加入到Prompt中
+    // If a previous analysis exists (user is iterating), add it to the prompt
     if (previousAnalysis) {
       userPrompt += `
       
-      这是一次迭代分析。用户提供了他们修改过的数据或上一次的分析结果。
-      请使用这些信息来修正你的分析，重点关注填充那些之前为null或不正确的字段。
+      This is an iterative analysis. The user has provided their modified data or the previous analysis result.
+      Use this information to refine your analysis, focusing on filling in fields that were previously null or incorrect.
       
-      上一次的分析/用户的修正:
+      Previous analysis / User's corrections:
       ${JSON.stringify(previousAnalysis, null, 2)}
       `;
     }
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4o", // 使用最新、最强大的模型
+      model: "gpt-4o", // Use the latest and most powerful model
       messages: [
         {
           role: "user",
@@ -51,25 +51,25 @@ export default async function handler(req, res) {
             {
               type: "image_url",
               image_url: {
-                url: image, // 从前端传来的Base64图片数据
-                detail: "high" // 使用高分辨率模式，以便读取图纸上的小字
+                url: image, // The Base64 image data from the frontend
+                detail: "high" // Use high-resolution mode to read small text on the drawing
               },
             },
           ],
         },
       ],
-      max_tokens: 2048, // 限制最大token数，防止失控
-      response_format: { type: "json_object" }, // 强制AI输出JSON格式，非常重要！
+      max_tokens: 2048, // Limit the maximum number of tokens to prevent run-on responses
+      response_format: { type: "json_object" }, // Force the AI to output in JSON format, which is crucial!
     });
 
-    // 解析AI返回的JSON字符串
+    // Parse the JSON string returned by the AI
     const aiResponseJson = JSON.parse(response.choices[0].message.content);
     
-    // 将解析后的JSON对象返回给前端
+    // Return the parsed JSON object to the frontend
     res.status(200).json(aiResponseJson);
 
   } catch (error) {
-    console.error('调用OpenAI时出错:', error);
-    res.status(500).json({ message: '分析图像时出错', details: error.message });
+    console.error('Error calling OpenAI:', error);
+    res.status(500).json({ message: 'Error analyzing the image', details: error.message });
   }
 }
