@@ -14,6 +14,69 @@ const activeTab = ref('analyzer');
 const initialUserHint = ref('');
 const aiNotes = ref('');
 const outputDimension = ref('2d');
+// --- 【【【 新增 State 用于新功能 】】】 ---
+const newShapeDescription = ref('');
+const newShapeImageBase64 = ref('');
+const isGeneratingFunction = ref(false);
+const generatedPythonCode = ref('');
+const pythonGenerationError = ref('');
+
+
+// --- 【【【 新增方法用于新功能 】】】 ---
+const handleNewShapeImageChange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) {
+    newShapeImageBase64.value = '';
+    return;
+  }
+  newShapeImageBase64.value = await fileToBase64(file); // 复用已有的 fileToBase64 函数
+};
+
+const handleGenerateFunction = async () => {
+  if (!newShapeDescription.value && !newShapeImageBase64.value) {
+    alert('Please provide a text description or upload an image for the new shape.');
+    return;
+  }
+
+  isGeneratingFunction.value = true;
+  pythonGenerationError.value = '';
+  generatedPythonCode.value = '// AI is thinking, please wait...';
+
+  try {
+    const response = await fetch('/api/generate_function', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        description: newShapeDescription.value,
+        imageBase64: newShapeImageBase64.value,
+      }),
+    });
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.details || errData.message || 'Failed to generate function');
+    }
+
+    const result = await response.json();
+    generatedPythonCode.value = result.python_code;
+
+  } catch (error) {
+    pythonGenerationError.value = error.message;
+    generatedPythonCode.value = `# An error occurred:\n# ${error.message}`;
+  } finally {
+    isGeneratingFunction.value = false;
+  }
+};
+
+const copyPythonCode = async () => {
+  if (!generatedPythonCode.value) return;
+  try {
+    await navigator.clipboard.writeText(generatedPythonCode.value);
+    alert('Python code copied to clipboard!');
+  } catch (err) {
+    alert('Failed to copy code.');
+  }
+};
 
 // --- Utility Functions & Computed Properties ---
 function hasNullOrEmpty(data) {
@@ -187,6 +250,10 @@ const switchToJsonTab = () => {
              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.39 6.39a.75.75 0 011.06 0l2.11 2.11a.75.75 0 010 1.06L7.45 11.61a.75.75 0 01-1.06-1.06l1.59-1.59-1.59-1.59a.75.75 0 010-1.06zM13.61 6.39a.75.75 0 010 1.06l-1.59 1.59 1.59 1.59a.75.75 0 01-1.06 1.06L10.44 9.56a.75.75 0 010-1.06l2.11-2.11a.75.75 0 011.06 0z" clip-rule="evenodd"/></svg>
             JSON Code
           </button>
+          <button :class="{ active: activeTab === 'function_generator' }" @click="activeTab = 'function_generator'">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.362 3.653a1 1 0 00-1.04-.344L4.36 5.562a1 1 0 00-.86 1.036l.732 4.418-1.54 1.232a1 1 0 00-.28 1.344l4.25 5.5a1 1 0 001.455.155l3.8-2.85a1 1 0 00.223-1.16l-1.334-3.001 3.428-1.904a1 1 0 00.556-1.328l-2.438-4.25a1 1 0 00-1.18-.543z" /></svg>
+             Add New Shape
+          </button>
         </div>
         
         <main class="content-wrapper">
@@ -292,6 +359,51 @@ const switchToJsonTab = () => {
               </button>
             </div>
           </div>
+
+          <div v-if="activeTab === 'function_generator'" class="tab-content">
+      <div class="card">
+        <h2>Generate New Python Drawing Function</h2>
+        <p style="margin-bottom: 1.5rem;">Describe a new part with text or an image. The AI will write the Python function for you, which you can then add to your LISP generator script.</p>
+        
+        <div class="function-generator-form">
+          <textarea 
+            v-model="newShapeDescription" 
+            placeholder="Describe the new shape here. E.g., 'A T-slot nut with overall dimensions 20x20x10mm. The T-slot is 8mm wide and 5mm deep...'"
+            class="iteration-textarea"
+            rows="5"
+          ></textarea>
+
+          <div class="iteration-upload" style="margin-top: 1rem;">
+            <label for="shape-image-upload" class="custom-file-upload">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z"/><path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z"/></svg>
+              Upload Sketch (Optional)
+            </label>
+            <input id="shape-image-upload" type="file" @change="handleNewShapeImageChange" accept="image/*" />
+            <span v-if="newShapeImageBase64" class="file-selected-badge">Image Selected</span>
+          </div>
+
+          <button @click="handleGenerateFunction" :disabled="isGeneratingFunction" class="primary-btn" style="margin-top: 1.5rem;">
+            <div v-if="isGeneratingFunction" class="spinner-small"></div>
+            {{ isGeneratingFunction ? 'Generating Code...' : 'Generate Python Function' }}
+          </button>
+        </div>
+      </div>
+
+      <div v-if="generatedPythonCode || isGeneratingFunction" class="card" style="margin-top: 2rem;">
+         <h2>Generated Python Code:</h2>
+         <p>Copy this code and paste it into your Python script.</p>
+         <div class="json-code-container" style="max-height: 600px;">
+            <pre><code class="language-python">{{ generatedPythonCode }}</code></pre>
+         </div>
+         <button @click="copyPythonCode" class="primary-btn" style="margin-top: 1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V16.5a1.5 1.5 0 01-1.5 1.5h-8A1.5 1.5 0 016 16.5v-13A1.5 1.5 0 017 3.5zM8.5 3.5a.5.5 0 00-.5.5v13a.5.5 0 00.5.5h8a.5.5 0 00.5-.5V6.622a.5.5 0 00-.146-.353l-3.122-3.122A.5.5 0 0012.379 3H8.5z"/><path d="M3 6.5A1.5 1.5 0 014.5 5h3a.75.75 0 000-1.5h-3A2.5 2.5 0 002 6v11A2.5 2.5 0 004.5 19.5h8A2.5 2.5 0 0015 17v-3a.75.75 0 00-1.5 0v3a1 1 0 01-1 1h-8a1 1 0 01-1-1V6z"/></svg>
+            Copy Python Code
+         </button>
+         <div v-if="pythonGenerationError" class="error-message" style="margin-top: 1rem; text-align: left;">
+            <p><strong>Error:</strong> {{ pythonGenerationError }}</p>
+         </div>
+       </div>
+      </div>
         </main>
       </div>
 

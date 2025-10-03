@@ -23,6 +23,10 @@ import { cuboidCylinderAssembly2dSchema } from './schemas/assembly_cuboid_cylind
 import { cuboidCylinderAssembly3dSchema } from './schemas/assembly_cuboid_cylinder_3d_schema.js';
 import { screwNutAssembly2dSchema } from './schemas/assembly_screw_nut_2d_schema.js';
 import { screwNutAssembly3dSchema } from './schemas/assembly_screw_nut_3d_schema.js';
+import { masterPromptTemplate } from './prompt_template.js';
+
+// ... (您已有的 express, cors, openai, schemas 等所有代码保持不变) ...
+
 
 // --- 初始化 ---
 dotenv.config();
@@ -111,6 +115,65 @@ function preProcessIterationData(data) {
     }
     return data;
 }
+// ==============================================================================
+//  【【【 新增 API 端点：Python 函数生成器 】】】
+// ==============================================================================
+app.post('/api/generate_function', async (req, res) => {
+  console.log('🤖 Received request to generate a new Python function...');
+  
+  const { description, imageBase64 } = req.body;
+
+  if (!description && !imageBase64) {
+    return res.status(400).json({ message: 'Request is empty. Please provide a text description or an image.' });
+  }
+  
+  try {
+    // 1. 从模板中构建最终的提示
+    // 注意：我们用用户的真实需求替换掉了模板中的占位符 {{USER_SHAPE_DESCRIPTION}}
+    const finalPrompt = masterPromptTemplate.replace('{{USER_SHAPE_DESCRIPTION}}', description || 'Analyze the provided image.');
+
+    // 2. 准备发送给 OpenAI 的消息体
+    const messages = [{
+      role: 'user',
+      content: [{ type: "text", text: finalPrompt }]
+    }];
+    
+    // 如果用户上传了图片，也一并加入
+    if (imageBase64) {
+        messages[0].content.push({
+            type: "image_url",
+            image_url: { url: imageBase64, detail: "high" }
+        });
+    }
+
+    // 3. 调用 OpenAI API
+    console.log('Sending massive prompt to AI for code generation...');
+    const response = await openai.chat.completions.create({
+      model: process.env.AI_MODEL_NAME, // 建议使用能力更强的模型，如 gpt-4-turbo
+      messages: messages,
+      temperature: 0.2, // 使用较低的 temperature 让输出更稳定、更像代码
+      max_tokens: 16384,
+    });
+    
+    let generatedCode = response.choices[0].message.content;
+
+    // 4. 清理 AI 返回的代码 (非常重要)
+    // AI 经常会用 Markdown 的 ```python ... ``` 包裹代码，我们需要提取出来
+    const codeBlockMatch = generatedCode.match(/```python\n([\s\S]*?)\n```/);
+    if (codeBlockMatch && codeBlockMatch[1]) {
+      generatedCode = codeBlockMatch[1];
+    }
+    
+    console.log('✅ Successfully generated Python code snippet.');
+    
+    // 5. 将纯净的代码字符串返回给前端
+    res.status(200).json({ python_code: generatedCode });
+
+  } catch (error) {
+    console.error('Error during Python function generation:', error);
+    res.status(500).json({ message: 'Failed to generate Python function.', details: error.message });
+  }
+});
 
 // --- API 路由 ---
 // server.js
@@ -260,8 +323,17 @@ app.post('/api/analyze', async (req, res) => {
   }
 });
 
-// --- 启动服务器 ---
-app.listen(port, () => {
+import http from 'http'; // 在文件顶部确保引入 http 模块
+
+const server = http.createServer(app);
+
+// 设置服务器超时时间为 5 分钟 (300,000 毫秒)
+// 给予AI模型充分的思考和生成时间，避免服务器端主动断开
+const SERVER_TIMEOUT = 300 * 1000;
+server.setTimeout(SERVER_TIMEOUT);
+
+server.listen(port, () => {
   console.log(`✅ 后端服务器已启动，正在监听 http://localhost:${port}`);
+  console.log(`⏰ 服务器超时设置为: ${SERVER_TIMEOUT / 1000} 秒`);
   console.log(`🚀 使用模型: ${process.env.AI_MODEL_NAME}`);
 });
