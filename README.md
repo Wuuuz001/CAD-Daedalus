@@ -6,9 +6,9 @@
 
 **CAD-Daedalus is a Neuro-Symbolic Framework for Standardized and Verifiable Engineering Design, bridging the gap between the probabilistic nature of Large Language Models (LLMs) and the deterministic requirements of Computer-Aided Design (CAD).** [cite: 1, 2, 5]
 
-The official repository for the paper: **CAD-Daedalus: A Neuro-Symbolic Framework for the Standardized Engineering Design**[cite: 1, 2].
+The official repository for the paper: **CAD-Daedalus: A Neuro-Symbolic Framework for the Standardized Engineering Design**.
 
-**[Access the Repository](https://github.com/Wuuuz001/CAD-Daedalus)** [cite: 17]
+**[Access the Repository](https://github.com/Wuuuz001/CAD-Daedalus)** 
 
 ---
 
