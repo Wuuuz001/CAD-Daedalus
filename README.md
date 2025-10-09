@@ -150,7 +150,7 @@ npm start
 
 4. This will compile the frontend and start a local development server. It will typically open automatically in your web browser at an address like http://localhost:5173 or http://localhost:3000.
 
-   ![image-20251009154640085](picture\image1.png)
+   ![image-20251009154640085](picture/image1.png)
 
 ### Part 2: Setup the Autocad (Execution Layer)
 
@@ -173,7 +173,7 @@ npm start
    python lisp_generator.py
    ```
 
-   ![image-20251009162731029](picture\image2.png)
+   ![image-20251009162731029](picture/image2.png)
 
 3. **Select Design:** The script will prompt you with a menu. Enter the number corresponding to the JSON file you just updated.
 
@@ -197,9 +197,9 @@ step2:
 DRAWMYOBJECT
 ```
 
-![image-20251009163632076](picture\image4.png)
+![image-20251009163632076](picture/image4.png)
 
-![image-20251009163715257](C:\Users\吴贞浩\AppData\Roaming\Typora\typora-user-images\image-20251009163715257.png)
+![image-20251009163715257](picture/image5.png)
 
 ## 📄 Citing Our Work
 
