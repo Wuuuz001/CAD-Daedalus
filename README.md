@@ -48,9 +48,7 @@ Before you begin, ensure you have the following installed on your system:
 - **Git**: For cloning the repository.
 - **An OpenAI API Key**: You need an API key from OpenAI or a compatible provider to use the LLM features.
 
-### Installation & Setup
-
-The setup process involves configuring both the backend server and the frontend application.
+### Part 1: Setup the Web Application (Analysis & Decision Layers)
 
 1. **Clone the repository:**
 
@@ -152,17 +150,56 @@ npm start
 
 4. This will compile the frontend and start a local development server. It will typically open automatically in your web browser at an address like http://localhost:5173 or http://localhost:3000.
 
-   ![image-20251009154640085](C:\Users\吴贞浩\AppData\Roaming\Typora\typora-user-images\image-20251009154640085.png)
+   ![image-20251009154640085](picture\image1.png)
 
-### 
+### Part 2: Setup the Autocad (Execution Layer)
 
-1.  **Start the backend server and frontend application:**
-    
-    ```sh
-    npm start
-    ```
-2.  **Open your browser** and navigate to `http://localhost:3000` (or the configured port).
-3.  **Interact with the application** by providing text prompts or uploading images to begin the design process.
+1. **Navigate and Create Virtual Environment**
+
+   - From the root, go to the python-kernel directory. Create and activate a Python virtual environment.
+
+   ```
+   cd ../Autocad
+   python -m pip install python-dotenv
+   ```
+
+### Step 3: Synthesize the CAD Script (Execution)
+
+1. **Prepare Input:** In the Autocad directory, open the appropriate example JSON file (e.g., cylinder_data.json) and paste the JSON you copied from the browser, replacing the file's content.
+
+2. **Run the Kernel: **Open a terminal and navigate to your Python project folder (Autocad).
+
+   ```
+   python lisp_generator.py
+   ```
+
+   ![image-20251009162731029](picture\image2.png)
+
+3. **Select Design:** The script will prompt you with a menu. Enter the number corresponding to the JSON file you just updated.
+
+4. **Output:** The script will generate a file named draw_object.lsp.
+
+You may utilise this LSP file within AutoCAD for rendering purposes, thereby generating the 2D or 3D drawings required for industrial applications.
+
+step1:
+
+```
+ap
+```
+
+![image-20251009163341277](picture/image31.png)
+
+![image-20251009163455800](picture/image3.png)
+
+step2:
+
+```
+DRAWMYOBJECT
+```
+
+![image-20251009163632076](picture\image4.png)
+
+![image-20251009163715257](C:\Users\吴贞浩\AppData\Roaming\Typora\typora-user-images\image-20251009163715257.png)
 
 ## 📄 Citing Our Work
 
@@ -175,3 +212,5 @@ If you use CAD-Daedalus in your research, please cite our paper:
   journal={IEEE Transactions on Automation Science and Engineering},
   year={2025}
 }
+
+```
