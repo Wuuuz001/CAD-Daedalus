@@ -4,7 +4,7 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/Wuuuz001/CAD-Daedalus)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Wuuuz001/CAD-Daedalus)
 
-**CAD-Daedalus is a Neuro-Symbolic Framework for Standardized and Verifiable Engineering Design, bridging the gap between the probabilistic nature of Large Language Models (LLMs) and the deterministic requirements of Computer-Aided Design (CAD).** [cite: 1, 2, 5]
+**CAD-Daedalus is a Neuro-Symbolic Framework for Standardized and Verifiable Engineering Design, bridging the gap between the probabilistic nature of Large Language Models (LLMs) and the deterministic requirements of Computer-Aided Design (CAD).** 
 
 The official repository for the paper: **CAD-Daedalus: A Neuro-Symbolic Framework for the Standardized Engineering Design**.
 
@@ -37,7 +37,7 @@ CAD-Daedalus can generate a wide spectrum of engineering artifacts, from basic g
 
 ## 🚀 Getting Started
 
-To get a local copy up and running, follow these simple steps.
+This guide provides a complete walkthrough for setting up and running the CAD-Daedalus framework locally.
 
 ### Prerequisites
 
@@ -55,7 +55,7 @@ Before you begin, ensure you have the following installed on your system:
    First, clone the project to your local machine using Git and navigate into the project directory.
 
    ```sh
-   git clone https://github.com/Wuuuz001/CAD-Daedalus.git(https://github.com/Wuuuz001/CAD-Daedalus.git)
+   git clone https://github.com/Wuuuz001/CAD-Daedalus.git
    ```
 
 2. **Navigate to the project directory:**
@@ -109,7 +109,7 @@ Before you begin, ensure you have the following installed on your system:
    **Navigate to the frontend directory from the project root:**
 
    ```
-   cd ../my-ai-front
+   cd my-ai-front
    ```
 
    **Install dependencies:**
@@ -154,16 +154,16 @@ npm start
 
 ### Part 2: Setup the Autocad (Execution Layer)
 
-1. **Navigate and Create Virtual Environment**
+1. **Navigate to the Autocad Directory**
 
-   - From the root, go to the python-kernel directory. Create and activate a Python virtual environment.
+   - From the root, navigate into the `Autocad` directory.
 
    ```
-   cd ../Autocad
-   python -m pip install python-dotenv
+   cd Autocad
+   pip install python-dotenv
    ```
 
-### Step 3: Synthesize the CAD Script (Execution)
+#### Synthesize the CAD Script (Execution)
 
 1. **Prepare Input:** In the Autocad directory, open the appropriate example JSON file (e.g., cylinder_data.json) and paste the JSON you copied from the browser, replacing the file's content.
 
