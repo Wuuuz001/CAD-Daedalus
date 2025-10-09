@@ -23,10 +23,9 @@ Integrating Large Language Models (LLMs) into Computer-Aided Design (CAD) presen
 
 Daedalus introduces several core contributions to the field of AI-assisted engineering:
 
--   [cite_start]**✅ Verifiable Neuro-Symbolic Framework:** Separates the LLM's probabilistic reasoning from a deterministic, symbolic compiler, guaranteeing reliability and compliance with engineering rules. [cite: 107, 108]
--   [cite_start]**🤝 Multimodal Human-AI Interaction:** A dialogue-driven refinement process that transforms the design workflow from a brittle, one-shot attempt into a robust, collaborative partnership between the user and the AI. [cite: 110, 112]
--   [cite_start]**📊 True Success Rate (TSR) Metric:** A novel, cost-aware evaluation framework that provides a more holistic and fair standard for benchmarking AI engineering systems. [cite: 113, 114]
--   [cite_start]**🔧 Extensibility and Generalization:** The framework can generalize across dimensions (2D to 3D) and synergistically integrate other state-of-the-art generative models (like GNNs or Diffusion models) without requiring extensive pre-training. [cite: 14, 120]
+-   **✅ Verifiable Neuro-Symbolic Framework:** Separates the LLM's probabilistic reasoning from a deterministic, symbolic compiler, guaranteeing reliability and compliance with engineering rules.
+-   **🤝 Multimodal Human-AI Interaction:** A dialogue-driven refinement process that transforms the design workflow from a brittle, one-shot attempt into a robust, collaborative partnership between the user and the AI.
+-   **🔧 Extensibility and Generalization:** The framework can generalize across dimensions (2D to 3D) and synergistically integrate other state-of-the-art generative models (like GNNs or Diffusion models) without requiring extensive pre-training.
 
 ## 🖼️ Gallery: Examples of Generated Designs
 
