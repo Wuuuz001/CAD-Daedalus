@@ -20,7 +20,7 @@ Integrating Large Language Models (LLMs) into Computer-Aided Design (CAD) presen
 
 ## 🏛️ Core Architecture
 
-[cite_start]The Daedalus framework is built upon a hierarchical, three-stage architecture that systematically separates the cognitive tasks of engineering design: Analysis, Decision, and Execution. [cite: 103, 104]
+The Daedalus framework is built upon a hierarchical, three-stage architecture that systematically separates the cognitive tasks of engineering design: Analysis, Decision, and Execution.
 
 ![Architectural Overview of the Daedalus Framework](https://i.imgur.com/uG9XgQi.png)
 [cite_start]*Figure: Architectural overview of the Daedalus framework, illustrating the iterative refinement loop across the three layers.* [cite: 97]
