@@ -33,37 +33,131 @@ CAD-Daedalus can generate a wide spectrum of engineering artifacts, from basic g
 
 | Cylinder (2D & 3D) | Cuboid (2D & 3D) | Hexagonal Screw (2D & 3D) | Screw-Nut Assembly (2D & 3D) |
 | :----------------: | :--------------: | :-----------------------: | :--------------------------: |
-| <img src="picture/1.png" width="200"/> | <img src="picture/2.png" width="200"/> | <img src="picture/3.png" width="200"/> | <img src="https://i.imgur.com/zW0c8uJ.png" width="200"/> |
+| <img src="picture/1.png" width="200"/> | <img src="picture/2.png" width="200"/> | <img src="picture/3.png" width="200"/> | <img src="picture/4.png" width="200"/> |
 
 ## 🚀 Getting Started
-
-*(Note: These are example instructions based on a typical web application. Please update them with the specific commands for your project.)*
 
 To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
--   Node.js (v16 or later)
--   npm
+Before you begin, ensure you have the following installed on your system:
 
-### Installation
+- **Node.js**: Version 18.x or later. You can download it from [nodejs.org](https://www.google.com/url?sa=E&q=https%3A%2F%2Fnodejs.org%2F).
+- **npm**: This is the Node Package Manager and comes included with Node.js.
+- **Git**: For cloning the repository.
+- **An OpenAI API Key**: You need an API key from OpenAI or a compatible provider to use the LLM features.
 
-1.  **Clone the repository:**
-    ```sh
-    git clone https://github.com/Wuuuz001/CAD-Daedalus.git](https://github.com/Wuuuz001/CAD-Daedalus.git)
-    ```
-2.  **Navigate to the project directory:**
-    ```sh
-    cd CAD-Daedalus
-    ```
-3.  **Install NPM packages:**
-    ```sh
-    npm install
-    ```
+### Installation & Setup
 
-### Usage
+The setup process involves configuring both the backend server and the frontend application.
+
+1. **Clone the repository:**
+
+   First, clone the project to your local machine using Git and navigate into the project directory.
+
+   ```sh
+   git clone https://github.com/Wuuuz001/CAD-Daedalus.git(https://github.com/Wuuuz001/CAD-Daedalus.git)
+   ```
+
+2. **Navigate to the project directory:**
+
+   ```sh
+   cd CAD-Daedalus
+   ```
+
+3. **Set Up the Backend**
+
+   The backend is responsible for handling API requests, communicating with the OpenAI LLM, and parsing the design specifications.
+
+   **Navigate to the backend directory:**
+
+   ```sh
+   cd my-ai-backend
+   ```
+
+   **Install dependencies:**
+   This command reads the package.json file and installs the required libraries like Express and the OpenAI SDK.
+
+   ```
+   npm install
+   ```
+
+   Now, open the .env file with a text editor and add your configuration details. It should look like this:
+
+   ```
+   # --- OpenAI API Configuration ---
+   # Your secret API key from OpenAI
+   OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   
+   
+   # (Optional) If you are using a proxy or a self-hosted model, set the base URL
+   # OPENAI_API_BASE_URL="https://api.your-proxy.com/v1"    
+   
+   # The specific model you want to use (e.g., gpt-4-turbo, gpt-4o)
+   AI_MODEL_NAME="gpt-4-turbo"
+   
+   # --- Server Configuration ---
+   # The port the backend server will run on
+   PORT=3001
+   ```
+
+   ##### 
+
+4. **Set Up the Frontend (Vue.js)** 
+
+   The frontend provides the interactive web interface where you upload images, enter prompts, and edit        the generated parameters.
+
+   **Navigate to the frontend directory from the project root:**
+
+   ```
+   cd ../my-ai-front
+   ```
+
+   **Install dependencies:**
+   This will install Vue.js and all other frontend libraries listed in its package.json.
+
+   ```
+   npm install
+   ```
+
+### Running the Application
+
+To use the application, you must run both the backend and frontend servers simultaneously in two separate terminal windows.
+
+#### Terminal 1: Start the Backend Server
+
+1. Open a terminal and make sure you are in the backend directory (my-ai-backend).
+2. Run the start command:
+
+```
+npm start
+```
+
+   3.You should see a confirmation message in the console, indicating that the server is running, typically on port 3001:✅ Backend server started, listening on http://localhost:3001
+
+#### **Terminal 2: Start the Frontend Application**
+
+1. Open a new terminal window.
+
+2. Navigate to the frontend directory (my-ai-front).
+
+3. Run the start command for the development server:
+
+   ```
+   npm run dev
+   ```
+
+   *(Note: For some Vue.js projects, the command might be npm start. Please check your package.json file for the correct script.)*
+
+4. This will compile the frontend and start a local development server. It will typically open automatically in your web browser at an address like http://localhost:5173 or http://localhost:3000.
+
+   ![image-20251009154640085](C:\Users\吴贞浩\AppData\Roaming\Typora\typora-user-images\image-20251009154640085.png)
+
+### 
 
 1.  **Start the backend server and frontend application:**
+    
     ```sh
     npm start
     ```
