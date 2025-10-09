@@ -14,9 +14,9 @@ The official repository for the paper: **CAD-Daedalus: A Neuro-Symbolic Framewor
 
 ## 📖 About The Project
 
-[cite_start]Integrating Large Language Models (LLMs) into Computer-Aided Design (CAD) presents a fundamental challenge: LLMs operate on probabilistic correlations, while engineering demands deterministic precision and adherence to strict standards. [cite: 5] [cite_start]End-to-end generative approaches often result in designs that are physically unrealizable, unstable, or non-compliant with manufacturing constraints, requiring costly manual rework. [cite: 6, 26]
+Integrating Large Language Models (LLMs) into Computer-Aided Design (CAD) presents a fundamental challenge: LLMs operate on probabilistic correlations, while engineering demands deterministic precision and adherence to strict standards. End-to-end generative approaches often result in designs that are physically unrealizable, unstable, or non-compliant with manufacturing constraints, requiring costly manual rework.
 
-**CAD-Daedalus** addresses this problem by architecturally reframing the LLM's role. [cite_start]Instead of being an unreliable end-to-end generator, the LLM acts as an **interactive proposal engine** within a verifiable and deterministic framework. [cite: 7, 102] [cite_start]Our core innovation is the decoupling of probabilistic intent parsing from deterministic geometric synthesis, ensuring that all generated outputs are verifiably correct and compliant with engineering standards. [cite: 15, 31]
+**CAD-Daedalus** addresses this problem by architecturally reframing the LLM's role. [cite_start]Instead of being an unreliable end-to-end generator, the LLM acts as an **interactive proposal engine** within a verifiable and deterministic framework. Our core innovation is the decoupling of probabilistic intent parsing from deterministic geometric synthesis, ensuring that all generated outputs are verifiably correct and compliant with engineering standards. [cite: 15, 31]
 
 ## 🏛️ Core Architecture
 
