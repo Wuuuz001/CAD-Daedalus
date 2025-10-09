@@ -33,7 +33,7 @@ CAD-Daedalus can generate a wide spectrum of engineering artifacts, from basic g
 
 | Cylinder (2D & 3D) | Cuboid (2D & 3D) | Hexagonal Screw (2D & 3D) | Screw-Nut Assembly (2D & 3D) |
 | :----------------: | :--------------: | :-----------------------: | :--------------------------: |
-| <img src="picture/1.png" width="200"/> | <img src="picture/2.png" width="200"/> | <img src="picture/3.png" width="200"/> | <img src="https://i.imgur.com/zW0c8uJ.png" width="200"/> |
+| <img src="picture/1.png" width="200"/> | <img src="picture/2.png" width="200"/> | <img src="picture/3.png" width="200"/> | <img src="picture/4.png" width="200"/> |
 
 ## 🚀 Getting Started
 
