@@ -4,11 +4,11 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/Wuuuz001/CAD-Daedalus)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Wuuuz001/CAD-Daedalus)
 
-[cite_start]**CAD-Daedalus is a Neuro-Symbolic Framework for Standardized and Verifiable Engineering Design, bridging the gap between the probabilistic nature of Large Language Models (LLMs) and the deterministic requirements of Computer-Aided Design (CAD).** [cite: 1, 2, 5]
+**CAD-Daedalus is a Neuro-Symbolic Framework for Standardized and Verifiable Engineering Design, bridging the gap between the probabilistic nature of Large Language Models (LLMs) and the deterministic requirements of Computer-Aided Design (CAD).** [cite: 1, 2, 5]
 
-[cite_start]The official repository for the paper: **CAD-Daedalus: A Neuro-Symbolic Framework for the Standardized Engineering Design**[cite: 1, 2].
+The official repository for the paper: **CAD-Daedalus: A Neuro-Symbolic Framework for the Standardized Engineering Design**[cite: 1, 2].
 
-[cite_start]**[Access the Repository](https://github.com/Wuuuz001/CAD-Daedalus)** [cite: 17]
+**[Access the Repository](https://github.com/Wuuuz001/CAD-Daedalus)** [cite: 17]
 
 ---
 
