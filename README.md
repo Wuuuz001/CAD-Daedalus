@@ -29,13 +29,11 @@ Daedalus introduces several core contributions to the field of AI-assisted engin
 
 ## 🖼️ Gallery: Examples of Generated Designs
 
-]CAD-Daedalus can generate a wide spectrum of engineering artifacts, from basic geometric primitives to complex, multi-component assemblies, all with precise dimensional and tolerance annotations.
+CAD-Daedalus can generate a wide spectrum of engineering artifacts, from basic geometric primitives to complex, multi-component assemblies, all with precise dimensional and tolerance annotations.
 
 | Cylinder (2D & 3D) | Cuboid (2D & 3D) | Hexagonal Screw (2D & 3D) | Screw-Nut Assembly (2D & 3D) |
 | :----------------: | :--------------: | :-----------------------: | :--------------------------: |
 | <img src="https://i.imgur.com/8QjSbrg.png" width="200"/> | <img src="https://i.imgur.com/uR2k2sC.png" width="200"/> | <img src="https://i.imgur.com/yF5w5oU.png" width="200"/> | <img src="https://i.imgur.com/zW0c8uJ.png" width="200"/> |
-
-[cite_start]*Examples showcase the framework's capability to produce both 2D drawings and 3D solid models compliant with manufacturing standards.* [cite: 172, 444, 446]
 
 ## 🚀 Getting Started
 
