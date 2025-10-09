@@ -37,8 +37,6 @@ CAD-Daedalus can generate a wide spectrum of engineering artifacts, from basic g
 
 ## 🚀 Getting Started
 
-*(Note: These are example instructions based on a typical web application. Please update them with the specific commands for your project.)*
-
 To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
