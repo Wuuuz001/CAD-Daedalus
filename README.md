@@ -167,7 +167,7 @@ npm start
 
 1. **Prepare Input:** In the Autocad directory, open the appropriate example JSON file (e.g., cylinder_data.json) and paste the JSON you copied from the browser, replacing the file's content.
 
-2. **Run the Kernel: **Open a terminal and navigate to your Python project folder (Autocad).
+2. **Run the Kernel:** Open a terminal and navigate to your Python project folder (Autocad).
 
    ```
    python lisp_generator.py
